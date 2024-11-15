@@ -1,5 +1,5 @@
 import {getConnecterUser, triggerNotConnected} from "../lib/session";
-// import { Redis } from '@upstash/redis';
+// import {kv} from "@vercel/kv";
 // const PushNotifications = require("@pusher/push-notifications-server");
 
 export default async (request, response) => {

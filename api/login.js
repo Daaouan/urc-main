@@ -1,12 +1,10 @@
 import { db } from '@vercel/postgres';
-import { Redis } from '@upstash/redis';
+import { kv } from "@vercel/kv";
 import {arrayBufferToBase64, stringToArrayBuffer} from "../lib/base64";
 
 export const config = {
     runtime: 'edge',
 };
-
-const redis = Redis.fromEnv();
 
 export default async function handler(request) {
     try {
@@ -26,10 +24,10 @@ export default async function handler(request) {
             await client.sql`update users set last_login = now() where user_id = ${rows[0].user_id}`;
             const token = crypto.randomUUID().toString();
             const user = {id: rows[0].user_id, username: rows[0].username, email: rows[0].email, externalId: rows[0].external_id}
-            await redis.set(token, user, { ex: 3600 });
+            await kv.set(token, user, { ex: 86400 });
             const userInfo = {};
             userInfo[user.id] = user;
-            await redis.hset("users", userInfo);
+            await kv.hset("users", userInfo);
 
             return new Response(JSON.stringify({token: token, username: username, externalId: rows[0].external_id, id: rows[0].user_id}), {
                 status: 200,
@@ -43,4 +41,4 @@ export default async function handler(request) {
             headers: {'content-type': 'application/json'},
         });
     }
-}
+};
