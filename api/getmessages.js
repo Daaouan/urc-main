@@ -22,20 +22,21 @@ export default async function handler(request) {
     }
     const { rowCount, rows } = await sql`
     SELECT
-    message_id,  -- Update from id to message_id
-    sender_id,
-    receiver_id,
-    message_text,
-    TO_CHAR(timestamp, 'DD/MM/YYYY HH24:MI') as timestamp
+    message_id,
+    emetteur_id AS sender_id,  -- Rename emetteur_id to sender_id for consistency
+    recepteur_id AS receiver_id,  -- Rename recepteur_id to receiver_id for consistency
+    contenu AS message_text,  -- Replace message_text with contenu
+    TO_CHAR(created_on, 'DD/MM/YYYY HH24:MI') as timestamp  -- Replace timestamp with created_on
     FROM
         messages
     WHERE
-        (sender_id = ${sender_id} AND receiver_id = ${receiver_id})
+        (emetteur_id = ${sender_id} AND recepteur_id = ${receiver_id})
         OR
-        (sender_id = ${receiver_id} AND receiver_id = ${sender_id})
+        (emetteur_id = ${receiver_id} AND recepteur_id = ${sender_id})
     ORDER BY
-        timestamp ASC;
+        created_on ASC;  -- Order by created_on instead of timestamp
 `;
+
 
 
     if (rowCount === 0) {

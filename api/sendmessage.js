@@ -12,17 +12,17 @@ export default async function handler(request) {
       console.log("Not connected");
       return unauthorizedResponse();
     }
-    const {sender_id,receiver_id,message_text} = await request.json();
+    const {emetteur_id,receiver_id,message_text} = await request.json();
 
-    if (!sender_id || !receiver_id || !message_text) {
+    if (!emetteur_id || !receiver_id || !message_text) {
       return new Response("Missing required fields", {
         status: 400,
         headers: { "content-type": "application/json" },
       });
     }
     const { rowCount } = await sql`
-      INSERT INTO messages (sender_id, receiver_id, message_text)
-      VALUES (${sender_id}, ${receiver_id}, ${message_text})
+      INSERT INTO messages (emetteur_id, receiver_id, message_text)
+      VALUES (${emetteur_id}, ${receiver_id}, ${message_text})
     `;
 
     if(rowCount>0){

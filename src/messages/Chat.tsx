@@ -130,7 +130,7 @@ const Chat = () => {
           <Button
             type="submit"
             width="100%"
-            bg="#13262F"  // Couleur de fond
+            bg="#3182CE"  // Couleur de fond
             color="white"  // Couleur du texte
             disabled={loading}
           >
