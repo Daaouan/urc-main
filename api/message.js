@@ -1,6 +1,5 @@
 import {getConnecterUser, triggerNotConnected} from "../lib/session";
 // import {kv} from "@vercel/kv";
-// const PushNotifications = require("@pusher/push-notifications-server");
 
 export default async (request, response) => {
     try {
@@ -13,7 +12,6 @@ export default async (request, response) => {
 
         const message = await request.body;
 
-        // TODO : save message
 
         response.send("OK");
     } catch (error) {

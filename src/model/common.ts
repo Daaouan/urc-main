@@ -1,4 +1,8 @@
 import {CustomError} from "./CustomError";
+import moment from 'moment';
+export const formatTimestamp = (timestamp: EpochTimeStamp) => {
+    return moment(timestamp).format('DD/MM/YYYY HH:mm');
+  };
 
 export const AUTHENT_HEADER = "Authentication";
 export const BEARER = "Bearer ";
@@ -11,19 +15,6 @@ export interface User {
     last_login?: string;
     external_id?: string;
 }
-export interface UserPublic{
-		user_id: number;
-		username: string;
-		last_login?: string;
-}
-
-export interface Message{
-    id?: number;
-    sender_id: number;
-    receiver_id: number;
-    message_text?: string;
-    timestamp?: string;
-}
 
 export interface Session {
     token: string;
@@ -31,7 +22,6 @@ export interface Session {
     id?: number;
     externalId: string;
 }
-
 
 export interface EmptyCallback {
     (): void;
@@ -41,23 +31,28 @@ export interface SessionCallback {
     (session: Session): void;
 }
 
-
 export interface ErrorCallback {
     (error: CustomError): void;
 }
 
-export interface SessionState {
-    session: Session;
+export interface Account {
+    username: string;
+    email?: string;
+    password: string;
 }
-
-export interface RootState {
-    session: SessionState;
+export interface UserInfos {
+    username: string;
+    userId : number;
+    last_login?: EpochTimeStamp;
 }
-
-export interface UsersState{
-    users: UserPublic[]
+export interface Message {
+    senderId: number;
+    receiverId: number;
+    messageContent: string;
+    timestamp?: EpochTimeStamp;
+    senderName: string;
 }
-
-export interface RootUsersState{
-    users: UsersState
+export interface MessageInfos {
+    senderId: number;
+    receiverId: number;
 }
