@@ -12,7 +12,7 @@ export default async function handler(request) {
       console.log("Not connected");
       return unauthorizedResponse();
     }
-    const {sender_id,receiver_id} = await request.json();
+    const { sender_id, receiver_id } = await request.json();
 
     if (!sender_id || !receiver_id) {
       return new Response("Missing required fields", {
@@ -22,7 +22,7 @@ export default async function handler(request) {
     }
     const { rowCount, rows } = await sql`
     SELECT
-    id,
+    message_id,  -- Update from id to message_id
     sender_id,
     receiver_id,
     message_text,
@@ -35,23 +35,24 @@ export default async function handler(request) {
         (sender_id = ${receiver_id} AND receiver_id = ${sender_id})
     ORDER BY
         timestamp ASC;
-    `;
+`;
+
 
     if (rowCount === 0) {
-        /* Vercel bug doesn't allow 204 response status */
-        return new Response("[]", {
-            status: 200,
-            headers: {'content-type': 'application/json'},
-        });
+      /* Vercel bug doesn't allow 204 response status */
+      return new Response("[]", {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
     }
     else {
-        return new Response(JSON.stringify(rows), {
-            status: 200,
-            headers: {'content-type': 'application/json'},
-        });
+      return new Response(JSON.stringify(rows), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
     }
   }
-    catch (error) {
+  catch (error) {
     console.error(error);
     return new Response(JSON.stringify(error), {
       status: 500,
