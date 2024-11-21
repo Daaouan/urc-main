@@ -26,24 +26,64 @@ const Chats = () => {
     };
 
     return (
-        <Box component="main" sx={{ p: 3, margin: '0 auto', position: 'relative' }}>
+        <Box
+            component="main"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "100vh",
+                background: "linear-gradient(to right, #6a11cb, #2575fc)", // Gradient background
+                color: "#fff",
+                padding: 4,
+                position: "relative",
+            }}
+        >
             <CssBaseline />
-            
-            {/* Bouton de déconnexion en haut à droite */}
+
+            {/* Logout Button */}
             <IconButton
                 sx={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 16,
                     right: 16,
-                    bgcolor: '#ff5722',
-                    color: '#fff',
-                    '&:hover': { bgcolor: '#e64a19' },
+                    background: "linear-gradient(to right, #00c6ff, #0072ff)", 
+                    color: "#fff", 
+                    borderRadius: "50%", 
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", 
+                    "&:hover": {
+                        background: "linear-gradient(to right, #0072ff, #00c6ff)", 
+                        transform: "scale(1.1)", 
+                    },
+                    transition: "transform 0.3s, background 0.3s", 
                 }}
                 onClick={handleLogout}
             >
                 <Logout />
             </IconButton>
 
+            {/* Page Title */}
+            <Typography
+                variant="h3"
+                sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    textShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                }}
+            >
+                Chat avec {receiverName || "Utilisateur"} !
+            </Typography>
+            <Typography
+                variant="subtitle1"
+                sx={{
+                    color: "rgba(255, 255, 255, 0.8)",
+                    fontStyle: "italic",
+                }}
+            >
+                Bienvenue dans votre espace de discussion. Vous pouvez maintenant envoyer des messages à {receiverName || "Utilisateur"}
+            </Typography>
+
+            {/* Messages */}
             <MessageList receiverId={Number(receiverId)} receiverName={String(receiverName)} />
             <AddMessage receiverId={Number(receiverId)} />
         </Box>

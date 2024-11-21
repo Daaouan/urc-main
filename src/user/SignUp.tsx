@@ -46,87 +46,94 @@ const SignUp = () => {
   };
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#e0f7fa' }}>
-      <Grid container direction="column" alignItems="center" spacing={3}>
-        <Grid item>
-          <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
-            <Typography variant="h4" align="center" gutterBottom>
-              Créer un compte
-            </Typography>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                name="username"
-                label="Nom d'utilisateur"
-                placeholder="Saisissez votre nom d'utilisateur"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                name="email"
-                label="E-mail"
-                type="email"
-                placeholder="Entrez votre adresse e-mail"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                name="password"
-                label="Mot de passe"
-                type="password"
-                placeholder="Entrez votre mot de passe"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                name="confirmPassword"
-                label="Confirmer le mot de passe"
-                type="password"
-                placeholder="Confirmez votre mot de passe"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 2, mb: 2 }}
-              >
-                Créer un compte
-              </Button>
-            </form>
-            {error.message && (
-              <Alert severity="error" sx={{ mt: 2 }}>
-                {error.message}
-              </Alert>
-            )}
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Typography variant="body2">
-            Déjà un compte ?{" "}
-            <Button component={Link} to="/login" variant="text" color="primary">
-              Se connecter
-            </Button>
-          </Typography>
-        </Grid>
-      </Grid>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+        color: '#fff',
+      }}
+    >
+      <Paper elevation={6} sx={{ padding: 4, width: 400 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Créer un compte
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            name="username"
+            label="Nom d'utilisateur"
+            placeholder="Saisissez votre nom d'utilisateur"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            name="email"
+            label="E-mail"
+            type="email"
+            placeholder="Entrez votre adresse e-mail"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            name="password"
+            label="Mot de passe"
+            type="password"
+            placeholder="Entrez votre mot de passe"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            name="confirmPassword"
+            label="Confirmer le mot de passe"
+            type="password"
+            placeholder="Confirmez votre mot de passe"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            sx={{
+              mt: 2,
+              bgcolor: '#2575fc',
+              '&:hover': { bgcolor: '#6a11cb' },
+            }}
+          >
+            Créer un compte
+          </Button>
+        </form>
+        {error.message && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error.message}
+          </Alert>
+        )}
+        <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+          Déjà un compte ?{" "}
+          <Button component={Link} to="/login" variant="text" color="primary">
+            Se connecter
+          </Button>
+        </Typography>
+      </Paper>
     </Box>
   );
 };

@@ -4,7 +4,7 @@ import { userInfosSelector } from '../../features/loginSlice';
 import { CustomError } from '../../model/CustomError';
 import { Message } from '../../model/common';
 import { addMessage } from './addMessagesAPI';
-import { Grid, TextField, IconButton } from '@mui/material';
+import { Grid, TextField, IconButton, Typography } from '@mui/material';
 import { setnewMSG } from '../../features/messageSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
@@ -50,34 +50,62 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
     };
 
     return (
-        <Grid container alignItems="center">
-            <Grid item xs={10} sx={{ paddingRight: 2 }}>
+        <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+                mt: 2,
+                p: 2,
+                paddingLeft: 30,
+                borderTop: '1px solid',
+                borderColor: 'grey.300',
+                borderRadius: 2,
+                boxShadow: 2, 
+            }}
+        >
+            <Grid item xs={10} sx={{ pr: 2 }}>
                 <TextField
                     name="messageSent"
-                    label="Message"
+                    label="Votre Message"
                     placeholder="Saisissez votre message"
                     variant="outlined"
                     fullWidth
-                    margin="normal"
                     value={messageSent}
                     onChange={handleChange}
-                    required
                     autoComplete="off"
                     multiline
                     maxRows={2}
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            borderRadius: 2, 
+                            color: 'white',
+                        },
+                    }}
+
                 />
             </Grid>
             <Grid item xs={2}>
                 <IconButton
                     type="submit"
                     color="primary"
-                    aria-label="send"
                     onClick={handleSubmit}
+                    sx={{
+                        bgcolor: 'primary.main',
+                        color: 'white',
+                        '&:hover': { bgcolor: 'primary.dark' },
+                        borderRadius: 1, 
+                        boxShadow: 1, 
+                    }}
                 >
                     <SendIcon />
                 </IconButton>
             </Grid>
-            {error.message && <span>{error.message}</span>}
+            {error.message && (
+                <Typography variant="caption" color="error" sx={{ mt: 1, textAlign: 'center' }}>
+                    {error.message}
+                </Typography>
+            )}
         </Grid>
     );
 };
