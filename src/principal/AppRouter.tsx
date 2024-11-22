@@ -5,6 +5,7 @@ import {Login} from "../user/Login";
 import SignUp from '../user/SignUp';
 import Home from '../chat/Home';
 import Chats from '../chat/Chats';
+import RoomChat from '../chat/RoomChat';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../app/store";
 import {useEffect} from "react";
@@ -38,6 +39,7 @@ const AppRouter = () => {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/home" element={<Home/>} />
         <Route path="/home/user/:receiverName/:receiverId" element={<Chats />} />
+        <Route path="/home/room/:roomName/:roomId" element={<RoomChat />} />
 
         <Route path="*" element={<NotFound />} />
 

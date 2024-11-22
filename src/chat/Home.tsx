@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userInfosSelector } from "../features/loginSlice";
 import GetUser from "./allUser/getUser";
+import Rooms from "../room/Rooms";
 import { messageReceiverSelector } from "../features/messageSlice";
 import {
   CssBaseline,
@@ -104,7 +105,9 @@ const Home = () => {
         <br />
         <GetUser />
 
-
+        <br /><br />
+        <Rooms />
+        
         <Box
           sx={{
             flex: 1,
