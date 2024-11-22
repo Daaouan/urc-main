@@ -59,7 +59,7 @@ async function sendNotification(userIds, title, message) {
           notification: {
             title: title,
             body: message,
-            deep_link: 'http://localhost:3001/messages',
+            deep_link: 'http://localhost:3000/messages',
 
           },
       },
