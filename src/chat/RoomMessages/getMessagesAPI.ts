@@ -1,25 +1,20 @@
 import { ErrorCallback,  Message, MessageInfos} from "../../model/common";
 import {CustomError} from "../../model/CustomError";
 
-export function getMessage(messageInfos : MessageInfos, onResult: (message: Message[]) => void, onError: ErrorCallback) {  
-    //console.log("fff"+ messageInfos);
-    fetch("/api/getMessages",
-    {
-        method: "POST", // ou 'PUT'
+export function getMessagesByRoom(roomId: number, onResult: (messages: Message[]) => void, onError: ErrorCallback) {
+    fetch(`/api/getRoomMessages/${roomId}`, {
+        method: 'GET',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(messageInfos),
     })
         .then(async (response) => {
             if (response.ok) {
-                const messageList: Message[] = await response.json();
-        
-        
-                onResult(messageList);
+                const messages: Message[] = await response.json();
+                onResult(messages);
             } else {
-              const error = await response.json() as CustomError;
-              onError(error);
+                const error = await response.json() as CustomError;
+                onError(error);
             }
         }, onError);
 }

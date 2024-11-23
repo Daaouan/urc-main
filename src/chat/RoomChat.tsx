@@ -10,14 +10,14 @@ import { Logout } from '@mui/icons-material';
 import { AppDispatch } from '../app/store';
 
 const Chats = () => {
-    const { receiverId, receiverName } = useParams();
+    const { room_id, roomName } = useParams();
     const userInfos = useSelector(userInfosSelector);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     useEffect(() => {
         console.log(userInfos);
-    }, [userInfos, receiverId]);
+    }, [userInfos, room_id]);
 
     // Fonction de déconnexion
     const handleLogout = () => {
@@ -47,15 +47,15 @@ const Chats = () => {
                     position: "absolute",
                     top: 16,
                     right: 16,
-                    background: "linear-gradient(to right, #00c6ff, #0072ff)", 
-                    color: "#fff", 
-                    borderRadius: "50%", 
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", 
+                    background: "linear-gradient(to right, #00c6ff, #0072ff)",
+                    color: "#fff",
+                    borderRadius: "50%",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
                     "&:hover": {
-                        background: "linear-gradient(to right, #0072ff, #00c6ff)", 
-                        transform: "scale(1.1)", 
+                        background: "linear-gradient(to right, #0072ff, #00c6ff)",
+                        transform: "scale(1.1)",
                     },
-                    transition: "transform 0.3s, background 0.3s", 
+                    transition: "transform 0.3s, background 0.3s",
                 }}
                 onClick={handleLogout}
             >
@@ -71,7 +71,7 @@ const Chats = () => {
                     textShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
                 }}
             >
-                Chat avec {receiverName || "Utilisateur"} !
+                Chat dans {roomName || "Utilisateur"} !
             </Typography>
             <Typography
                 variant="subtitle1"
@@ -80,12 +80,13 @@ const Chats = () => {
                     fontStyle: "italic",
                 }}
             >
-                Bienvenue dans votre espace de discussion. Vous pouvez maintenant envoyer des messages à {receiverName || "Utilisateur"}
+                Bienvenue dans votre espace de discussion. Vous pouvez maintenant envoyer des messages dans {roomName || "Utilisateur"}
             </Typography>
 
             {/* Messages */}
-            <MessageList receiverId={Number(receiverId)} receiverName={String(receiverName)} />
-            <AddMessage receiverId={Number(receiverId)} />
+            <MessageList receiverId={Number(room_id)} receiverName={String(roomName)} />
+            <AddMessage receiverId={Number(room_id)} />
+
         </Box>
     );
 };

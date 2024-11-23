@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { userInfosSelector } from '../../features/loginSlice';
 import { CustomError } from '../../model/CustomError';
-import { Message } from '../../model/common';
+import { RoomsMessage } from '../../model/common';
 import { addMessage } from './addMessagesAPI';
 import { Grid, TextField, IconButton, Typography } from '@mui/material';
 import { setnewMSG } from '../../features/messageSlice';
@@ -10,7 +10,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import SendIcon from '@mui/icons-material/Send';
 
-const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
+interface AddMessageProps {
+    roomId: number;
+}
+
+const AddMessage: React.FC<AddMessageProps> = ({ roomId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const userInfos = useSelector(userInfosSelector);
     const [messageSent, setMessageSent] = useState('');
@@ -23,13 +27,14 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (receiverId !== -1) {
-            const message: Message = {
+        if (roomId !== -1) {
+            const message: RoomsMessage = {
                 senderId: userInfos.userId,
-                receiverId: receiverId,
+                roomId, 
                 messageContent: messageSent,
                 senderName: userInfos.username,
             };
+
             addMessage(
                 message,
                 (result: boolean) => {
@@ -61,7 +66,7 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                 borderTop: '1px solid',
                 borderColor: 'grey.300',
                 borderRadius: 2,
-                boxShadow: 2, 
+                boxShadow: 2,
             }}
         >
             <Grid item xs={10} sx={{ pr: 2 }}>
@@ -78,11 +83,10 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                     maxRows={2}
                     sx={{
                         '& .MuiOutlinedInput-root': {
-                            borderRadius: 2, 
+                            borderRadius: 2,
                             color: 'white',
                         },
                     }}
-
                 />
             </Grid>
             <Grid item xs={2}>
@@ -94,8 +98,8 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                         bgcolor: 'primary.main',
                         color: 'white',
                         '&:hover': { bgcolor: 'primary.dark' },
-                        borderRadius: 1, 
-                        boxShadow: 1, 
+                        borderRadius: 1,
+                        boxShadow: 1,
                     }}
                 >
                     <SendIcon />

@@ -1,10 +1,10 @@
-import { ErrorCallback,  Message} from "../../model/common";
+import { ErrorCallback, RoomsMessage} from "../../model/common";
 import {CustomError} from "../../model/CustomError";
 
-export function addMessage(message : Message, onResult: (success: boolean) => void, onError: ErrorCallback) {  
-    fetch("/api/addMessages",
+export function addMessage(message : RoomsMessage, onResult: (success: boolean) => void, onError: ErrorCallback) {  
+    fetch("/api/addRoomMessages",
     {
-        method: "POST", // ou 'PUT'
+        method: "POST", 
         headers: {
             "Content-Type": "application/json",
         },
@@ -16,12 +16,12 @@ export function addMessage(message : Message, onResult: (success: boolean) => vo
             } else {
               const error = await response.json() as CustomError;
               onError(error);
-              onResult(false); // Signalise l'échec de la création du message
+              onResult(false); 
             }
         }, onError);
 }
 
-export function sendNotif(message : Message, onResult: (success: boolean) => void, onError: ErrorCallback) { 
+export function sendNotif(message : RoomsMessage, onResult: (success: boolean) => void, onError: ErrorCallback) { 
 
     fetch("/api/sendnotification",
     {

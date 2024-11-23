@@ -52,6 +52,14 @@ export interface Message {
     timestamp?: EpochTimeStamp;
     senderName: string;
 }
+export interface RoomsMessage {
+    senderId: number;
+    messageContent: string;
+    timestamp?: EpochTimeStamp;
+    senderName: string;
+    roomId: number; 
+}
+
 export interface MessageInfos {
     senderId: number;
     receiverId: number;
