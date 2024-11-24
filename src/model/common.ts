@@ -51,7 +51,6 @@ export interface Message {
     messageContent: string;
     timestamp?: EpochTimeStamp;
     senderName: string;
-    filePath?: string; 
 }
 export interface RoomsMessage {
     senderId: number;
