@@ -14,7 +14,8 @@ Bienvenue dans ma version personnalisée de l'application UBO Relay Chat, inspir
 - Sécurité : Hash des mots de passe et stockage sécurisé des données.  
 - Persistance des sessions grâce à `sessionStorage`.  
 
-![Capture d’écran du formulaire de connexion](./doc/signup.png) (./doc/login.png)
+![Capture d’écran du formulaire de connexion](./doc/signup.png)
+![](./doc/login.png)
 
 ### 2️⃣ Gestion des Utilisateurs  
 - Liste des utilisateurs disponibles avec leurs informations publiques (nom, dernière connexion).  
@@ -41,6 +42,8 @@ Bienvenue dans ma version personnalisée de l'application UBO Relay Chat, inspir
 - Création et gestion de salons de discussion.  
 - Interface dédiée aux groupes avec affichage des membres connectés.  
 - Messages groupés enregistrés dans la base de données avec un identifiant de salon spécifique.  
+
+![Capture d’écran de l’interface de messagerie en groupe](./doc/grp.png)
 
 ### Format Blob  
 
