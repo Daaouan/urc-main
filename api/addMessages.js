@@ -21,18 +21,6 @@ export default async function handler(req, res) {
       timestamp: timestamp,
     };
 
-     // Handle file upload if present
-     let filePath = null;
-     if (data.file) {
-       const uploadDir = path.join(process.cwd(), 'uploads');
-       if (!fs.existsSync(uploadDir)) {
-         fs.mkdirSync(uploadDir);
-       }
-       const buffer = Buffer.from(data.file);
-       filePath = path.join(uploadDir, `${Date.now()}-${senderId}-${receiverId}`);
-       fs.writeFileSync(filePath, buffer);
-     }
-
     // Add the new message to the conversation in Vercel KV
     await kv.lpush(conversationKey, newMessage);
 

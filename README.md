@@ -38,6 +38,8 @@ Bienvenue dans ma version personnalisée de l'application UBO Relay Chat, inspir
 - Intégration avec Pusher pour gérer les notifications.  
 - Enregistrement des notifications via un service worker.  
 
+![Capture d’écran des notifications](./doc/notification.png)
+
 ### 5️⃣ Messagerie en Groupe (Salons)  
 - Création et gestion de salons de discussion.  
 - Interface dédiée aux groupes avec affichage des membres connectés.  
