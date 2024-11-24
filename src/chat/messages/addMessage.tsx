@@ -4,17 +4,25 @@ import { userInfosSelector } from '../../features/loginSlice';
 import { CustomError } from '../../model/CustomError';
 import { Message } from '../../model/common';
 import { addMessage } from './addMessagesAPI';
-import { Grid, TextField, IconButton, Typography } from '@mui/material';
+import { Grid, TextField, IconButton, Typography, Input } from '@mui/material';
 import { setnewMSG } from '../../features/messageSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const userInfos = useSelector(userInfosSelector);
     const [messageSent, setMessageSent] = useState('');
+    const [selectedFile, setSelectedFile] = useState<Blob | null>(null);
     const [error, setError] = useState({} as CustomError);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessageSent(e.target.value);
@@ -22,7 +30,7 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
+    
         if (receiverId !== -1) {
             const message: Message = {
                 senderId: userInfos.userId,
@@ -30,12 +38,21 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                 messageContent: messageSent,
                 senderName: userInfos.username,
             };
+    
+            // Create a FormData object
+            const formData = new FormData();
+            formData.append('message', JSON.stringify(message));
+            if (selectedFile) {
+                formData.append('file', selectedFile);
+            }
+    
             addMessage(
-                message,
+                formData,
                 (result: boolean) => {
                     if (result === true) {
                         dispatch(setnewMSG());
                         setMessageSent('');
+                        setSelectedFile(null);
                         setError(new CustomError(''));
                     } else {
                         console.error('La création de message a échoué.');
@@ -47,24 +64,11 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                 }
             );
         }
-    };
+    };    
 
     return (
-        <Grid
-            container
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-                mt: 2,
-                p: 2,
-                paddingLeft: 30,
-                borderTop: '1px solid',
-                borderColor: 'grey.300',
-                borderRadius: 2,
-                boxShadow: 2, 
-            }}
-        >
-            <Grid item xs={10} sx={{ pr: 2 }}>
+        <Grid container alignItems="center" justifyContent="center" sx={{ mt: 2, p: 2 }}>
+            <Grid item xs={8} sx={{ pr: 2 }}>
                 <TextField
                     name="messageSent"
                     label="Votre Message"
@@ -76,36 +80,29 @@ const AddMessage: React.FC<{ receiverId: number }> = ({ receiverId }) => {
                     autoComplete="off"
                     multiline
                     maxRows={2}
-                    sx={{
-                        '& .MuiOutlinedInput-root': {
-                            borderRadius: 2, 
-                            color: 'white',
-                        },
-                    }}
-
                 />
             </Grid>
-            <Grid item xs={2}>
-                <IconButton
-                    type="submit"
-                    color="primary"
-                    onClick={handleSubmit}
-                    sx={{
-                        bgcolor: 'primary.main',
-                        color: 'white',
-                        '&:hover': { bgcolor: 'primary.dark' },
-                        borderRadius: 1, 
-                        boxShadow: 1, 
-                    }}
-                >
+            <Grid >
+                <Input
+                    type="file"
+                    inputProps={{ accept: 'image/*' }}
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                    id="file-upload"
+                />
+                {/* Label Associated with the Hidden Input */}
+                <label htmlFor="file-upload">
+                    <IconButton component="span" sx={{ color: 'white' }} aria-label="Attach file">
+                        <AttachFileIcon />
+                    </IconButton>
+                </label>
+            </Grid>
+            <Grid item >
+                <IconButton type="submit" sx={{ color: 'white' }} onClick={handleSubmit}>
                     <SendIcon />
                 </IconButton>
             </Grid>
-            {error.message && (
-                <Typography variant="caption" color="error" sx={{ mt: 1, textAlign: 'center' }}>
-                    {error.message}
-                </Typography>
-            )}
+            {error.message && <Typography color="error">{error.message}</Typography>}
         </Grid>
     );
 };

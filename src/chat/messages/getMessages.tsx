@@ -116,6 +116,9 @@ const MessageList: React.FC<{ receiverId: number, receiverName: string }> = ({ r
                     boxShadow: 2,
                   }}
                 >
+                  {message.filePath && (
+                    <img src={message.filePath} alt="attachment" style={{ maxWidth: '100%', borderRadius: '8px' }} />
+                  )}
                   <Typography>{message.messageContent}</Typography>
                   {message.timestamp && (
                     <Typography variant="caption" sx={{ mt: 1, color: 'text.secondary' }}>
